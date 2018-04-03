@@ -38,6 +38,7 @@ public class EmployeesDAO implements InterfaceDAO {
     public boolean insert(Object object) {
         boolean flag = false;
         try {
+            
             session = factory.openSession();
             transaction = session.beginTransaction();
             Employees emp = (Employees) object;
