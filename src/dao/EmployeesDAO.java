@@ -36,24 +36,7 @@ public class EmployeesDAO implements InterfaceDAO {
      */
     @Override
     public boolean insert(Object object) {
-        boolean flag = false;
-        try {
-            session = factory.openSession();
-            transaction = session.beginTransaction();
-            Employees emp = (Employees) object;
-//            session.persist(emp);
-            session.save(emp);
-            transaction.commit();
-            flag = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            if (transaction != null) {
-                transaction.rollback();
-            }
-        } finally {
-            session.close();
-        }
-        return flag;
+        return fdao.insert(object);
     }
 
     @Override
