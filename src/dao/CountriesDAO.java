@@ -67,21 +67,7 @@ public class CountriesDAO {
     * @return list data di dalam tabel Countries berdasarkan parameter yang dicari
     */
     public List<Object> search(String category, String search) {
-        List<Object> data = new ArrayList<>();
-        try {
-            session = factory.openSession();
-            transaction = session.beginTransaction();
-            data = session.createQuery("FROM Countries WHERE "+category+" LIKE '%"+search+"%'").list();
-            transaction.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            if (transaction!=null) {
-                transaction.rollback();
-            }
-        } finally {
-            session.close();
-        }
-        return data;
+        return fdao.getAll("FROM Countries WHERE "+category+" LIKE '%"+search+"%'");
     }
     
     
@@ -124,21 +110,6 @@ public class CountriesDAO {
     
     
     public List<Object> getAll() {
-        List<Object> data = new ArrayList<>();
-        try {
-            session = factory.openSession();
-            transaction = session.beginTransaction();
-            data = session.createQuery("From Countries ").list();
-            transaction.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            if (transaction != null) {
-                transaction.rollback();
-            }
-        } finally {
-            session.close();
-        }
-
-        return data;
+        return fdao.getAll("FROM Countries");
     }
 }
