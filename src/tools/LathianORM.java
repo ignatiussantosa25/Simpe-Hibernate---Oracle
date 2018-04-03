@@ -12,6 +12,7 @@ import entities.Departments;
 import entities.Employees;
 import entities.Jobs;
 import entities.Regions;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -76,10 +77,9 @@ public class LathianORM {
 //            Locations loc = (Locations) data;
 //            System.out.println(" Alamat Jalan: " + loc.getStreetAddress() + "| Kode Pos: " + loc.getPostalCode());
 //        }
-
         //getById() berdasarkan employee Id
-        Jobs jb = (Jobs) new JobsDAO().getById("PR_REP");;
-        System.out.println(jb.getJobTitle() + " " + jb.getMaxSalary());
+//        Jobs jb = (Jobs) new JobsDAO().getById("PR_REP");;
+//        System.out.println(jb.getJobTitle() + " " + jb.getMaxSalary());
 //
 //        /**
 //         * update jobs
@@ -229,6 +229,26 @@ public class LathianORM {
 //        */
 //        Departments departments =  new Departments(Short.parseShort("105"), "Pemasaran");
 //        System.out.println(new DepartmentsDAO().insert(departments));
-//}
-}
+        Employees emp = new Employees(209, "Santosa", "santosa", new Date());
+        emp.setJobId(new Jobs("FI_MGR"));
+        EmployeesDAO eDAO = new EmployeesDAO();
+//        System.out.println("Insert : "+eDAO.insert(emp));
+
+        emp.setFirstName("Graceia");
+        emp.setPhoneNumber("085640123456");
+        emp.setSalary(new BigDecimal(2500));
+//        System.out.println("Update : "+eDAO.update(emp));
+
+        System.out.println("Delete : "+eDAO.delete(209));
+        
+//        List<Object> daftar = eDAO.getAll();
+//        daftar = eDAO.search("employeeId", "20");
+//        for (Object object : daftar) {
+//            Employees employees = (Employees) object;
+//            System.out.println(employees.getLastName() + ", " + employees.getFirstName());
+//        }
+//
+//        emp = (Employees) eDAO.getById("209");
+//        System.out.println(emp.getLastName() + ", " + emp.getFirstName());
+    }
 }

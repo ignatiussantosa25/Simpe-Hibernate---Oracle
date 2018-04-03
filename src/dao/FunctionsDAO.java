@@ -5,6 +5,7 @@
  */
 package dao;
 
+import entities.Employees;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Session;
@@ -19,18 +20,28 @@ public class FunctionsDAO {
 
     private Session session;
     private Transaction transaction;
-    private SessionFactory factory;
+    public SessionFactory factory;
 
     public FunctionsDAO(SessionFactory factory) {
         this.factory = factory;
     }
 
-    public boolean insert(Object object) {
+    public boolean operations(int operation, Object object) {
         boolean flag = false;
         try {
             session = factory.openSession();
             transaction = session.beginTransaction();
-            session.save(object);
+            switch (operation) {
+                case 0:
+                    session.save(object);
+                    break;
+                case 1:
+                    session.update(object);
+                    break;
+                default:
+                    session.delete(object);
+                    break;
+            }
             transaction.commit();
             flag = true;
         } catch (Exception e) {
@@ -42,6 +53,18 @@ public class FunctionsDAO {
             session.close();
         }
         return flag;
+    }
+
+    public boolean insert(Object object) {
+        return operations(0, object);
+    }
+
+    public boolean update(Object object) {
+        return operations(1, object);
+    }
+
+    public boolean delete(Object object) {
+        return operations(2, object);
     }
 
     public List<Object> getAll(String query) {
@@ -69,15 +92,13 @@ public class FunctionsDAO {
         try {
             session = factory.openSession();
             transaction = session.beginTransaction();
-             obj = session.createQuery(query).uniqueResult();
+            obj = session.createQuery(query).uniqueResult();
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            {
-
-            }
+            e.printStackTrace();
         } finally {
             session.close();
         }

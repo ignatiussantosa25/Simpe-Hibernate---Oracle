@@ -41,54 +41,21 @@ public class EmployeesDAO implements InterfaceDAO {
 
     @Override
     public boolean update(Object object) {
-        boolean flag = false;
-        try {
-            session = factory.openSession();
-            transaction = session.beginTransaction();
-            Employees employees = (Employees) object;
-            Employees emp = (Employees) session
-                    .get(Employees.class,
-                            employees.getEmployeeId());
-            emp.setFirstName(employees.getFirstName());
-//            emp.setPhoneNumber(employees.getPhoneNumber());
-//            emp.setSalary(employees.getSalary());
-//            emp.setManagerId(employees.getManagerId());
-//            emp.setDepartmentId(employees.getDepartmentId());
-            session.update(emp);
-            transaction.commit();
-            flag = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            if (transaction != null) {
-                transaction.rollback();
-            }
-        } finally {
-            session.close();
-        }
-        return flag;
+        Employees employees = (Employees) object;
+        Employees emp = (Employees) this.getById(employees.getEmployeeId()+"");
+        emp.setFirstName(employees.getFirstName());
+        emp.setPhoneNumber(employees.getPhoneNumber());
+        emp.setSalary(employees.getSalary());
+        emp.setManagerId(employees.getManagerId());
+        emp.setDepartmentId(employees.getDepartmentId());
+        return fdao.update(emp);
     }
 
     @Override
     public boolean delete(Object object) {
-        boolean flag = false;
-        try {
-            session = factory.openSession();
-            transaction = session.beginTransaction();
-            Employees emp = (Employees) session
-                    .get(Employees.class,
-                            Integer.parseInt(object + ""));
-            session.delete(emp);
-            transaction.commit();
-            flag = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            if (transaction != null) {
-                transaction.rollback();
-            }
-        } finally {
-            session.close();
-        }
-        return flag;
+        Employees emp = (Employees) this.getById(object.toString());
+        System.out.println(emp.getFirstName());
+        return fdao.delete(emp);
     }
 
     @Override
@@ -105,7 +72,7 @@ public class EmployeesDAO implements InterfaceDAO {
 
     @Override
     public Object getById(String id) {
-        return fdao.getById("from Employees where employeeId='" + id + "'");
+        return fdao.getById("from Employees where employeeId=" + id);
     }
 
 }

@@ -48,6 +48,7 @@ Contributor(s):
     <property name="hibernate.connection.password">admin</property>
     <property name="hibernate.connection.autocommit">true</property>
     <property name="hibernate.default_schema">hr</property>
+    <property name="hibernate.hbm2ddl.auto">update</property>
     <mapping class="entities.Countries"/>
     <mapping class="entities.Departments"/>
     <mapping class="entities.Employees"/>
