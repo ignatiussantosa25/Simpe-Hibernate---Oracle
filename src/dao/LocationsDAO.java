@@ -26,27 +26,10 @@ public class LocationsDAO implements InterfaceDAO{
     
     public LocationsDAO(){
         this.fdao = new FunctionsDAO(HibernateUtil.getSessionFactory());
-        this.factory = HibernateUtil.getSessionFactory();
     }
     @Override
     public boolean insert(Object object) {
-        boolean flag = false;
-        try {
-            session = factory.openSession();
-            transaksi = session.beginTransaction();
-            Locations loc = (Locations) object;
-            session.save(loc);
-            transaksi.commit();
-            flag = true; //kenapa itdak di buat return? jika flag true maka catch tidak dijalankan
-        } catch (Exception e) {
-            e.printStackTrace();
-            if (transaksi!=null) {
-                transaksi.rollback();
-            }
-        } finally {
-            session.close();
-        }
-        return flag;
+        return fdao.insert(object);
     }
 
      /**
