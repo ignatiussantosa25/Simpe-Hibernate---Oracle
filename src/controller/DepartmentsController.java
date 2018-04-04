@@ -49,7 +49,7 @@ public class DepartmentsController {
                 dDAO.getAll());
     }
 
-    //belum sempurna
+    //belum sempurna, data masih ter-replace
     public void bindingSearch(JTable table,
             String[] header, String category,
             String cari) {
