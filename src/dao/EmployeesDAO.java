@@ -39,6 +39,7 @@ public class EmployeesDAO implements InterfaceDAO {
     @Override
     public boolean delete(Object object) {
         return fdao.delete(Employees.class, Integer.parseInt(object.toString()));
+//        return fdao.delete(Employees.class, object.hashCode());
     }
 
     @Override
