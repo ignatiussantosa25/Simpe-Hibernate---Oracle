@@ -41,7 +41,7 @@ public class Regions implements Serializable {
     private BigDecimal regionId;
     @Column(name = "REGION_NAME")
     private String regionName;
-    @OneToMany(mappedBy = "regionId", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "regionId", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Countries> countriesList;
 
     public Regions() {

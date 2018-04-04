@@ -44,7 +44,7 @@ public class EmployeesDAO implements InterfaceDAO {
 
     @Override
     public List<Object> getAll() {
-        return fdao.getAll("FROM Employees");
+        return fdao.getAll("FROM Employees ORDER BY employeeId");
     }
 
     @Override

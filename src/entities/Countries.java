@@ -41,7 +41,7 @@ public class Countries implements Serializable {
     private String countryId;
     @Column(name = "COUNTRY_NAME")
     private String countryName;
-    @OneToMany(mappedBy = "countryId", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "countryId", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Locations> locationsList;
     @JoinColumn(name = "REGION_ID", referencedColumnName = "REGION_ID")
     @ManyToOne(fetch = FetchType.LAZY)

@@ -42,7 +42,7 @@ public class Departments implements Serializable {
     @Basic(optional = false)
     @Column(name = "DEPARTMENT_NAME")
     private String departmentName;
-    @OneToMany(mappedBy = "departmentId", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "departmentId", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Employees> employeesList;
     @JoinColumn(name = "MANAGER_ID", referencedColumnName = "EMPLOYEE_ID")
     @ManyToOne(fetch = FetchType.LAZY)

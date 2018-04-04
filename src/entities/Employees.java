@@ -71,7 +71,7 @@ public class Employees implements Serializable {
     @JoinColumn(name = "DEPARTMENT_ID", referencedColumnName = "DEPARTMENT_ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private Departments departmentId;
-    @OneToMany(mappedBy = "managerId", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "managerId", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Employees> employeesList;
     @JoinColumn(name = "MANAGER_ID", referencedColumnName = "EMPLOYEE_ID")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -79,7 +79,7 @@ public class Employees implements Serializable {
     @JoinColumn(name = "JOB_ID", referencedColumnName = "JOB_ID")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Jobs jobId;
-    @OneToMany(mappedBy = "managerId", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "managerId", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Departments> departmentsList;
 
     public Employees() {

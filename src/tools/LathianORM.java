@@ -218,8 +218,8 @@ public class LathianORM {
 //        //Search() berdasarkan departmentName = IT
 //        List<Object> datasearch = new DepartmentsDAO().search("departmentName", "IT");
 //        for (Object object : datasearch) {
-//            Departments depart = (Departments) obj;
-//            System.out.println(depart.getManagerId() + " " + depart.getLocationId());
+//            Departments depart = (Departments) object;
+//            System.out.println(depart.getManagerId().getFirstName() + " " + depart.getLocationId().getCity());
 //        }
 //        
 //        //Update () RegionName menjadi Southeast Asia pada tabel tabel Regions yang memiliki Id = 4
@@ -306,8 +306,8 @@ public class LathianORM {
 ////        System.out.println(lDAO.insert(locations));
 //        System.out.println(lDAO.delete(locations.getLocationId()));
 
-        Departments departments = new Departments(new Short("209"), "Trainer");
-        DepartmentsDAO dDAO = new DepartmentsDAO();
+//        Departments departments = new Departments(new Short("209"), "Trainer");
+//        DepartmentsDAO dDAO = new DepartmentsDAO();
 //        System.out.println(dDAO.insert(departments));
 //        System.out.println(dDAO.delete(departments.getDepartmentId()));
 
@@ -315,7 +315,7 @@ public class LathianORM {
         EmployeesDAO eDAO = new EmployeesDAO();
         employees.setJobId(new Jobs("IT_PROG"));
         
-//        System.out.println(eDAO.insert(employees));
-        System.out.println(eDAO.delete(employees.getEmployeeId()));
+        System.out.println(eDAO.insert(employees));
+//        System.out.println(eDAO.delete(employees.getEmployeeId()));
     }
 }
