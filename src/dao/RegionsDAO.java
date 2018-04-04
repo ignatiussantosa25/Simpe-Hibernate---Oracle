@@ -5,13 +5,9 @@
  */
 package dao;
 
-import entities.Employees;
 import entities.Regions;
-import java.util.ArrayList;
+import java.math.BigDecimal;
 import java.util.List;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import tools.HibernateUtil;
 
 /**
@@ -20,14 +16,10 @@ import tools.HibernateUtil;
  */
 public class RegionsDAO implements InterfaceDAO {
 
-    public SessionFactory factory;
-    private Session session;
-    private Transaction transaction;
     public FunctionsDAO fdao;
 
     public RegionsDAO() {
-        this.fdao = new FunctionsDAO(HibernateUtil
-                .getSessionFactory());
+          this.fdao = new FunctionsDAO(HibernateUtil.getSessionFactory());
     }
 
     @Override
@@ -37,25 +29,7 @@ public class RegionsDAO implements InterfaceDAO {
 
     @Override
     public boolean update(Object object) {
-        boolean flag = false;
-        try {
-            session = factory.openSession();
-            transaction = session.beginTransaction();
-            Regions regions = (Regions) object;
-            Regions regs = (Regions) session.get(Regions.class, regions);
-            regs.setRegionName(regions.getRegionName());
-            session.update(regs);
-            transaction.commit();
-            flag = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            if (transaction != null) {
-                transaction.rollback();
-            }
-        } finally {
-            session.close();
-        }
-        return flag;
+        return fdao.insert(object);
 
     }
 
@@ -67,25 +41,7 @@ public class RegionsDAO implements InterfaceDAO {
      */
     @Override
     public boolean delete(Object object) {
-        boolean flag = false;
-        try {
-            session = factory.openSession();
-            transaction = session.beginTransaction();
-            Regions reg = (Regions) session
-                    .get(Regions.class,
-                            Integer.parseInt(object + ""));
-            session.delete(reg);
-            transaction.commit();
-            flag = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            if (transaction != null) {
-                transaction.rollback();
-            }
-        } finally {
-            session.close();
-        }
-        return flag;
+        return fdao.delete(Regions.class, BigDecimal.valueOf(Long.parseLong(object.toString())));
     }
 
     @Override
@@ -103,27 +59,9 @@ public class RegionsDAO implements InterfaceDAO {
      */
     @Override
     public List<Object> search(String category, String search) {
-        return fdao.getAll("FROM Regions WHERE " + category + " = " + search);
+        return fdao.getAll("FROM Regions WHERE " + category + " LIKE '%" + search + "%'");
     }
 
-//    @Override
-//    public Object getById(String id) {
-//        Object reg = new Object();
-//        try {
-//            session = factory.openSession();
-//            transaction = session.beginTransaction();
-//            reg = session
-//                    .createQuery("FROM Regions"
-//                            + " WHERE regionid="+id+"").uniqueResult();
-//            transaction.commit();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            if(transaction!=null)transaction.rollback();
-//        } finally {
-//            session.close();
-//        }
-//        return reg;
-//    }
     /**
      * Fungsi untuk menampilkan Region berdasarkan Id
      *
@@ -132,7 +70,7 @@ public class RegionsDAO implements InterfaceDAO {
      */
     @Override
     public Object getById(String id) {
-        return fdao.getById("from Regions where regionId='" + id + "'");
+        return fdao.getById("from Regions where regionId ='" + id + "'");
     }
 
 }

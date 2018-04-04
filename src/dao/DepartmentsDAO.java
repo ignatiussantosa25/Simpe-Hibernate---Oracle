@@ -6,11 +6,7 @@
 package dao;
 
 import entities.Departments;
-import java.util.ArrayList;
 import java.util.List;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import tools.HibernateUtil;
 
 /**
@@ -18,14 +14,11 @@ import tools.HibernateUtil;
  * @author TAMU
  */
 public class DepartmentsDAO implements InterfaceDAO {
-
-    public SessionFactory factory;
-    public Session session;
-    public Transaction transaksi;
+    
     public FunctionsDAO fdao;
 
     public DepartmentsDAO() {
-        this.fdao = new FunctionsDAO(HibernateUtil.getSessionFactory());
+       this.fdao = new FunctionsDAO(HibernateUtil.getSessionFactory());
     }
 
     @Override
@@ -35,49 +28,12 @@ public class DepartmentsDAO implements InterfaceDAO {
 
     @Override
     public boolean update(Object object) {
-        boolean flag = false;
-        try {
-            session = factory.openSession();
-            transaksi = session.beginTransaction();
-            Departments departments = (Departments) object;
-            Departments dep = (Departments) session.get(Departments.class, departments);
-            dep.setDepartmentId(departments.getDepartmentId());
-            dep.setDepartmentName(departments.getDepartmentName());
-            session.update(dep);
-            transaksi.commit();
-            flag = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            if (transaksi != null) {
-                transaksi.rollback();
-            }
-        } finally {
-            session.close();
-        }
-        return flag;
+        return fdao.insert(object);
     }
 
     @Override
     public boolean delete(Object object) {
-        boolean flag = false;
-        try {
-            session = factory.openSession();
-            transaksi = session.beginTransaction();
-            Departments dept = (Departments) session
-                    .get(Departments.class,
-                            object.toString());
-            session.delete(dept);
-            transaksi.commit();
-            flag = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            if (transaksi != null) {
-                transaksi.rollback();
-            }
-        } finally {
-            session.close();
-        }
-        return flag;
+        return fdao.delete(Departments.class,Short.parseShort(object.toString()));
     }
 
     @Override
@@ -87,7 +43,7 @@ public class DepartmentsDAO implements InterfaceDAO {
 
     @Override
     public List<Object> search(String category, String search) {
-        return fdao.getAll("FROM Departments WHERE " + category + " LIKE '%" + search + "%'");
+        return fdao.getAll("FROM Deparments WHERE " + category + " LIKE '%" + search + "%'");
     }
 
     /**

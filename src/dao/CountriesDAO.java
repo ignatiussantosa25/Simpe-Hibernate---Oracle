@@ -6,12 +6,7 @@
 package dao;
 
 import entities.Countries;
-import entities.Employees;
-import java.util.ArrayList;
 import java.util.List;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import tools.HibernateUtil;
 
 /**
@@ -20,10 +15,6 @@ import tools.HibernateUtil;
  */
 public class CountriesDAO {
 
-    public Session session;
-    private SessionFactory factory;
-    public Transaction transaction;
-    
     public FunctionsDAO fdao;
 
     public CountriesDAO() {
@@ -31,8 +22,7 @@ public class CountriesDAO {
     }
 
     public boolean insert(Object object) {
-        Countries countries = (Countries) object;
-        return fdao.insert(countries);
+        return fdao.insert(object);
     }
 
     /**
@@ -42,40 +32,25 @@ public class CountriesDAO {
      * @return flag
      */
     public boolean delete(Object object) {
-        boolean flag = false;
-        try {
-            session = factory.openSession();
-            transaction = session.beginTransaction();
-            Countries emp = (Countries) session.get(Countries.class, flag);
-            session.delete(emp);
-            transaction.commit();
-            flag = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            if (transaction != null) {
-                transaction.rollback();
-            }
-        } finally {
-            session.close();
-        }
-        return flag;
+        return fdao.delete(Countries.class, object.toString());
     }
-    
-     /**
-    * Fungsi search untuk mencari data pada tabel Countries
-    * @param String category berupa kategori yang ingin dicari, search berupa nilai yang ingin dicari
-    * @return list data di dalam tabel Countries berdasarkan parameter yang dicari
-    */
+
+    /**
+     * Fungsi search untuk mencari data pada tabel Countries
+     *
+     * @param String category berupa kategori yang ingin dicari, search berupa
+     * nilai yang ingin dicari
+     * @return list data di dalam tabel Countries berdasarkan parameter yang
+     * dicari
+     */
     public List<Object> search(String category, String search) {
-        return fdao.getAll("FROM Countries WHERE "+category+" LIKE '%"+search+"%'");
+        return fdao.getAll("FROM Countries WHERE " + category + " LIKE '%" + search + "%'");
     }
-    
-    
-    
+
     public Object getById(String Id) {
-        return fdao.getById("from Countries where countryId='" +Id+ "'");
+        return fdao.getById("from Countries where countryId='" + Id + "'");
     }
-        
+
     /**
      * fungsi insert untuk mengedit data pada tabel Countries
      *
@@ -83,32 +58,9 @@ public class CountriesDAO {
      * @return mengembalikan nilai true jika berhasil mengupdate data
      */
     public boolean update(Object object) {
-        boolean b = false;
-        try {
-            session = factory.openSession();
-            transaction = session.beginTransaction();
-            Countries countries = (Countries) object;
-            Countries c = (Countries) session.get(Countries.class, countries.getCountryId());
-            c.setCountryName(countries.getCountryName());
-//            emp.setPhoneNumber(emp.getPhoneNumber());
-//            emp.setSalary(employees.getSalary());
-//            emp.setManagerId(employees.getManagerId());
-//            emp.setDepartmentId(employees.getDepartmentId());
-            session.update(c);
-            
-            b = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            if (transaction != null) {
-                transaction.rollback();
-            }
-        } finally {
-            session.close();
-        }
-        return b;
+        return fdao.insert(object);
     }
-    
-    
+
     public List<Object> getAll() {
         return fdao.getAll("FROM Countries");
     }

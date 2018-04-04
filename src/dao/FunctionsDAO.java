@@ -5,7 +5,7 @@
  */
 package dao;
 
-import entities.Employees;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Session;
@@ -20,28 +20,19 @@ public class FunctionsDAO {
 
     private Session session;
     private Transaction transaction;
-    public SessionFactory factory;
+    private SessionFactory factory;
+    public FunctionsDAO fdao;
 
     public FunctionsDAO(SessionFactory factory) {
         this.factory = factory;
     }
 
-    public boolean operations(int operation, Object object) {
+    public boolean insert(Object object) {
         boolean flag = false;
         try {
             session = factory.openSession();
             transaction = session.beginTransaction();
-            switch (operation) {
-                case 0:
-                    session.save(object);
-                    break;
-                case 1:
-                    session.update(object);
-                    break;
-                default:
-                    session.delete(object);
-                    break;
-            }
+            session.saveOrUpdate(object);
             transaction.commit();
             flag = true;
         } catch (Exception e) {
@@ -55,17 +46,26 @@ public class FunctionsDAO {
         return flag;
     }
 
-    public boolean insert(Object object) {
-        return operations(0, object);
+    public boolean delete(Class type, Serializable srlzbl) {
+        boolean flag = false;
+        try {
+            session = factory.openSession();
+            transaction = session.beginTransaction();
+            System.out.println(Object.class);
+            session.delete(session.get(type, srlzbl));
+            transaction.commit();
+            flag = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        } finally {
+            session.close();
+        }
+        return flag;
     }
-
-    public boolean update(Object object) {
-        return operations(1, object);
-    }
-
-    public boolean delete(Object object) {
-        return operations(2, object);
-    }
+    
 
     public List<Object> getAll(String query) {
         List<Object> data = new ArrayList<>();
@@ -95,10 +95,10 @@ public class FunctionsDAO {
             obj = session.createQuery(query).uniqueResult();
             transaction.commit();
         } catch (Exception e) {
+            e.printStackTrace();
             if (transaction != null) {
                 transaction.rollback();
             }
-            e.printStackTrace();
         } finally {
             session.close();
         }

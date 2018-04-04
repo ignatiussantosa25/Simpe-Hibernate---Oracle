@@ -6,11 +6,7 @@
 package dao;
 
 import entities.Jobs;
-import java.util.ArrayList;
 import java.util.List;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import tools.HibernateUtil;
 
 /**
@@ -18,10 +14,7 @@ import tools.HibernateUtil;
  * @author Ignatius
  */
 public class JobsDAO {
-
-    public Session session;
-    private SessionFactory factory;
-    public Transaction transaction;
+    
     public FunctionsDAO fdao;
 
     public JobsDAO() {
@@ -30,6 +23,7 @@ public class JobsDAO {
 
     public List<Object> getAll() {
         return fdao.getAll("FROM Jobs");
+
     }
 
     /**
@@ -49,25 +43,7 @@ public class JobsDAO {
      *
      */
     public boolean update(Object object) {
-        boolean flag = false;
-        try {
-            session = factory.openSession();
-            transaction = session.beginTransaction();
-            Jobs jobs = (Jobs) object;
-            Jobs jj = (Jobs) session.get(Jobs.class, jobs.getJobId());
-            jj.setJobTitle(jobs.getJobTitle());
-            jj.setMaxSalary(jobs.getMaxSalary());
-            jj.setMinSalary(jobs.getMinSalary());
-            session.update(jj);
-            flag = true;
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-        } finally {
-            session.close();
-        }
-        return flag;
+        return fdao.insert(object);
     }
 
     /**
@@ -87,23 +63,7 @@ public class JobsDAO {
      * @return flag
      */
     public boolean delete(Object object) {
-        boolean flag = false;
-        try {
-            session = factory.openSession();
-            transaction = session.beginTransaction();
-            Jobs job = (Jobs) session.get(Jobs.class, Integer.parseInt(object + ""));
-            session.delete(job);
-            transaction.commit();
-            flag = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            if (transaction != null) {
-                transaction.rollback();
-            }
-        } finally {
-            session.close();
-        }
-        return flag;
+        return fdao.delete(Jobs.class,object.toString());
     }
 
     /**
@@ -113,22 +73,7 @@ public class JobsDAO {
      * @return List data yang dicari dari kelas Jobs
      */
     public List<Object> search(String category, String search) {
-        List<Object> data = new ArrayList<>();
-
-        try {
-            session = factory.openSession();
-            transaction = session.beginTransaction();
-            data = session.createQuery("from Jobs where " + category + " like '%" + search + "%' ").list(); //list dari employees dibungkus dalam session lalu dimasukan kedalam data
-            transaction.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            if (transaction != null) {
-                transaction.rollback();
-            }
-        } finally {
-            session.close();
-        }
-        return data;
+        return fdao.getAll("FROM Jobs WHERE " + category + " LIKE '%" + search + "%'");
     }
 
 }

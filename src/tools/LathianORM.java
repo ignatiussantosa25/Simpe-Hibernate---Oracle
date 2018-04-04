@@ -14,7 +14,9 @@ import entities.Jobs;
 import entities.Regions;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -67,7 +69,8 @@ public class LathianORM {
 //        }
 //        
 //        Countries countries = new Countries("NS", "Nusantara");
-//        System.out.println(new CountriesDAO().insert(countries));
+////        System.out.println(new CountriesDAO().insert(countries));
+//        System.out.println(new CountriesDAO().delete(countries.getCountryId()));
 //        Departments dep = (Departments) new DepartmentsDAO().getById("15");
 //        System.out.println(dep.getDepartmentName());
 //
@@ -78,7 +81,7 @@ public class LathianORM {
 //            System.out.println(" Alamat Jalan: " + loc.getStreetAddress() + "| Kode Pos: " + loc.getPostalCode());
 //        }
         //getById() berdasarkan employee Id
-//        Jobs jb = (Jobs) new JobsDAO().getById("PR_REP");;
+//        Jobs jb = (Jobs) new JobsDAO().getById("SA_REP");;
 //        System.out.println(jb.getJobTitle() + " " + jb.getMaxSalary());
 //
 //        /**
@@ -144,14 +147,13 @@ public class LathianORM {
 //        
 //        /////////////////////////////////////////////////////////////////////////////////////////////
 //       
-//       // COUNTRIES
-//       // Memanggil fungsi search Countries
+        // COUNTRIES
+        // Memanggil fungsi search Countries
 //        List<Object> search = new CountriesDAO().search("regionId", "1");
 //        for (Object datasearch : search) { // Untuk setiap objek di dalam list data
 //            Countries coun = (Countries) datasearch;
 //            System.out.println(coun.getCountryId() +" "+ coun.getCountryName());
 //        }
-//        
 //        
 //        ////////////////////////////////////////////////////////////////////////////////////////////
 //        
@@ -229,26 +231,91 @@ public class LathianORM {
 //        */
 //        Departments departments =  new Departments(Short.parseShort("105"), "Pemasaran");
 //        System.out.println(new DepartmentsDAO().insert(departments));
-        Employees emp = new Employees(209, "Santosa", "santosa", new Date());
-        emp.setJobId(new Jobs("FI_MGR"));
-        EmployeesDAO eDAO = new EmployeesDAO();
-//        System.out.println("Insert : "+eDAO.insert(emp));
-
-        emp.setFirstName("Graceia");
-        emp.setPhoneNumber("085640123456");
-        emp.setSalary(new BigDecimal(2500));
-//        System.out.println("Update : "+eDAO.update(emp));
-
-        System.out.println("Delete : "+eDAO.delete(209));
-        
-//        List<Object> daftar = eDAO.getAll();
-//        daftar = eDAO.search("employeeId", "20");
-//        for (Object object : daftar) {
-//            Employees employees = (Employees) object;
-//            System.out.println(employees.getLastName() + ", " + employees.getFirstName());
-//        }
+//}
+        /*
+        Update Jobs
+         */
+//        Jobs jbbb = (Jobs) new JobsDAO().getById("ST_MAN");
+//        jbbb.setJobId("ST_MAN1");
+//        jbbb.setJobTitle("contoh baru");
+//        jbbb.setMinSalary(10000);
+//        jbbb.setMaxSalary(111002);
+//        System.out.println(new JobsDAO().insert(jbbb));
+//        System.out.println(new JobsDAO().delete(jbbb.getJobId()));
 //
-//        emp = (Employees) eDAO.getById("209");
-//        System.out.println(emp.getLastName() + ", " + emp.getFirstName());
+//        /*
+//        Update Department 
+////         */
+//        Departments jbbd = (Departments) new DepartmentsDAO().getById("10");
+//        jbbd.setDepartmentName("JANGAN SALAH");
+////        jbbd.setManagerId(...);
+////        jbbd.setLocationId(...);
+//        System.out.println(new DepartmentsDAO().update(jbbd));
+//
+////        /*
+////        Update Countries
+////         */
+//        Countries jbbc = (Countries) new CountriesDAO().getById("AR");
+//        jbbc.setCountryName("JANGAN SALAH");
+////        jbbc.setRegionId(...);
+//        System.out.println(new CountriesDAO().update(jbbc));
+////
+////        /*
+////        Update Regions 
+////         */
+//            Regions jbbr = (Regions) new RegionsDAO().getById("1");
+//            jbbr.setRegionName("JANGAN SALAH");
+//            System.out.println(new RegionsDAO().update(jbbr));
+//////
+////        /*
+////        Update Employees 
+////         */
+//        Employees jbbm = (Employees) new EmployeesDAO().getById("100");
+//        jbbm.setFirstName("JANGAN SALAH");
+//        jbbm.setLastName("JANGAN SALAH");
+////        jbbm.setEmail("...");
+////        jbbm.setPhoneNumber("...");
+////        jbbm.setHireDate("...");
+////        jbbm.setJobId("...");
+////        jbbm.setSalary(BigDecimal.ZERO);
+////        jbbm.setCommissionPct("...");
+////        jbbm.setManagerId("...");
+////        jbbm.setDepartmentId("...");
+//        System.out.println(new EmployeesDAO().update(jbbm));
+//
+////        /*
+////        Update Locations
+////         */
+//        Locations jbbl = (Locations) new LocationsDAO().getById("1000");
+//        jbbl.setStreetAddress("JANGAN SALAH");
+////        jbbl.setPostalCode("...");
+////        jbbl.setCity("...");
+////        jbbl.setStateProvince("...");
+////        jbbl.setCountryId("...");
+//        System.out.println(new LocationsDAO().update(jbbl));
+//        Employees emp = (Employees) new EmployeesDAO().getById("207");
+//        System.out.println(emp.getEmail());
+//        System.out.println(new EmployeesDAO().delete("207"));
+//        Regions regions = new Regions(new BigDecimal("5"));
+//        regions.setRegionName("Australia");
+//        RegionsDAO rDAO = new RegionsDAO();
+////        System.out.println(rDAO.insert(regions));
+//        System.out.println(rDAO.delete(regions.getRegionId()));
+//        Locations locations = new Locations(new Short("1111"), "Nusantara");
+//        LocationsDAO lDAO = new LocationsDAO();
+////        System.out.println(lDAO.insert(locations));
+//        System.out.println(lDAO.delete(locations.getLocationId()));
+
+        Departments departments = new Departments(new Short("209"), "Trainer");
+        DepartmentsDAO dDAO = new DepartmentsDAO();
+//        System.out.println(dDAO.insert(departments));
+//        System.out.println(dDAO.delete(departments.getDepartmentId()));
+
+        Employees employees = new Employees(210, "Santosa", "JSantosa", new Date());
+        EmployeesDAO eDAO = new EmployeesDAO();
+        employees.setJobId(new Jobs("IT_PROG"));
+        
+//        System.out.println(eDAO.insert(employees));
+        System.out.println(eDAO.delete(employees.getEmployeeId()));
     }
 }
