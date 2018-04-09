@@ -33,7 +33,6 @@ public final class DepartmentsView extends javax.swing.JFrame {
         departmentsController.loadCity(cmbCity);
         departmentsController.loadManager(cmbManager);
         reset();
-        datas.forEach(System.out::println);
     }
 
     /**
@@ -242,7 +241,6 @@ public final class DepartmentsView extends javax.swing.JFrame {
         datas = departmentsController.bindingSearch(tblDepartments, header, 
                 headerTable[cmbCategory.getSelectedIndex()], 
                 txtSearch.getText());
-        System.out.println(datas.size());
     }//GEN-LAST:event_btnCariActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
@@ -268,11 +266,8 @@ public final class DepartmentsView extends javax.swing.JFrame {
         int row = tblDepartments.getSelectedRow();
         txtID.setText(tblDepartments.getValueAt(row, 1)+"");
         txtName.setText(tblDepartments.getValueAt(row, 2)+"");
-        System.out.println(datas.get(row));
         cmbManager.setSelectedItem(getCombo(false).get(row));
-        System.out.println(getCombo(false).get(row));
         cmbCity.setSelectedItem(getCombo(true).get(row));
-        System.out.println(getCombo(true).get(row));
         txtID.setEnabled(false);
         btnSave.setEnabled(true);
         btnDel.setEnabled(true);
