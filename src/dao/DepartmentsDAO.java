@@ -5,7 +5,6 @@
  */
 package dao;
 
-import entities.Countries;
 import entities.Departments;
 import java.util.List;
 import org.hibernate.Session;
@@ -45,12 +44,11 @@ public class DepartmentsDAO implements InterfaceDAO {
 
     @Override
     public List<Object> getAll() {
-        return fdao.getAll("FROM Departments");
+        return fdao.getAll("FROM Departments ORDER BY departmentId");
     }
 
     @Override
     public List<Object> search(String category, String search) {
-//        return fdao.getAll("FROM Departments WHERE " + category + " LIKE '%" + search + "%'");
         return fdao.getAll("FROM Departments WHERE " + category + " LIKE '%" + search + "%'");
     }
 

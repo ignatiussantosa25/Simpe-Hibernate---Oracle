@@ -6,29 +6,34 @@
 package view;
 
 import controller.DepartmentsController;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Ignatius
  */
-public class DepartmentsView extends javax.swing.JFrame {
+public final class DepartmentsView extends javax.swing.JFrame {
 
-    private String[] header={"No",
+    private final String[] header={"No",
             "Department ID","Department Name","Manager Name","City"};
-    private String[] headerTable={"department_id",
+    private final String[] headerTable={"department_id",
             "department_name","managerId","locationId"};
-    public DepartmentsController departmentsController;
+    private final DepartmentsController departmentsController;
+    private List<String> datas;
     /**
      * Creates new form OJDBCView
      */
     public DepartmentsView() {
         initComponents();
+        datas = new ArrayList<>();
         departmentsController = new DepartmentsController();
-        departmentsController.bindingAll(tblDepartments, header);
+        datas = departmentsController.bindingAll(tblDepartments, header);
         departmentsController.loadCity(cmbCity);
         departmentsController.loadManager(cmbManager);
         reset();
+        datas.forEach(System.out::println);
     }
 
     /**
@@ -233,9 +238,11 @@ public class DepartmentsView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDelActionPerformed
 
     private void btnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCariActionPerformed
-        departmentsController.bindingSearch(tblDepartments, header, 
+        datas = new ArrayList<>();
+        datas = departmentsController.bindingSearch(tblDepartments, header, 
                 headerTable[cmbCategory.getSelectedIndex()], 
                 txtSearch.getText());
+        System.out.println(datas.size());
     }//GEN-LAST:event_btnCariActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
@@ -258,11 +265,14 @@ public class DepartmentsView extends javax.swing.JFrame {
     }//GEN-LAST:event_txtIDKeyPressed
 
     private void tblDepartmentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDepartmentsMouseClicked
-        txtID.setText(tblDepartments.getValueAt
-        (tblDepartments.getSelectedRow(), 1)+"");
-        txtName.setText(tblDepartments.getValueAt
-        (tblDepartments.getSelectedRow(), 2)+"");
-//        (tblDepartments.getSelectedRow(), 2)+"");
+        int row = tblDepartments.getSelectedRow();
+        txtID.setText(tblDepartments.getValueAt(row, 1)+"");
+        txtName.setText(tblDepartments.getValueAt(row, 2)+"");
+        System.out.println(datas.get(row));
+        cmbManager.setSelectedItem(getCombo(false).get(row));
+        System.out.println(getCombo(false).get(row));
+        cmbCity.setSelectedItem(getCombo(true).get(row));
+        System.out.println(getCombo(true).get(row));
         txtID.setEnabled(false);
         btnSave.setEnabled(true);
         btnDel.setEnabled(true);
@@ -331,7 +341,7 @@ public class DepartmentsView extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     
-    public void reset(){
+    private void reset(){
         txtID.setText("");
         txtName.setText("");
         cmbManager.setSelectedIndex(0);
@@ -341,6 +351,17 @@ public class DepartmentsView extends javax.swing.JFrame {
         txtID.setEnabled(true);
         btnSave.setEnabled(false);
         btnDel.setEnabled(false);
+    }
+    
+    private List<String> getCombo(boolean isCity){
+        List<String> isi = new ArrayList<>();
+        String[] daftar = new String[datas.size()];
+        for (String data : datas) {
+            daftar = data.split(";");
+            if (isCity) isi.add(daftar[1]);
+            else isi.add(daftar[0]);
+        }
+        return isi;
     }
     
 }
