@@ -5,10 +5,8 @@
  */
 package dao;
 
-import entities.Countries;
 import entities.Regions;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -21,9 +19,6 @@ import tools.HibernateUtil;
  */
 public class RegionsDAO implements InterfaceDAO {
 
-    public SessionFactory factory;
-    private Session session;
-    private Transaction transaction;
     public FunctionsDAO fdao;
 
     public RegionsDAO() {

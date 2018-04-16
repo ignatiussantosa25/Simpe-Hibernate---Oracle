@@ -7,9 +7,6 @@ package dao;
 
 import entities.Employees;
 import java.util.List;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import tools.HibernateUtil;
 
 /**
@@ -18,9 +15,6 @@ import tools.HibernateUtil;
  */
 public class EmployeesDAO implements InterfaceDAO {
 
-    public SessionFactory factory;
-    private Session session;
-    private Transaction transaction;
     public FunctionsDAO fdao;
 
     public EmployeesDAO() {

@@ -7,9 +7,6 @@ package dao;
 
 import entities.Departments;
 import java.util.List;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import tools.HibernateUtil;
 
 /**
@@ -18,9 +15,6 @@ import tools.HibernateUtil;
  */
 public class DepartmentsDAO implements InterfaceDAO {
 
-    public SessionFactory factory;
-    public Session session;
-    public Transaction transaksi;
     public FunctionsDAO fdao;
 
     public DepartmentsDAO() {

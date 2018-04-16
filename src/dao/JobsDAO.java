@@ -7,9 +7,6 @@ package dao;
 
 import entities.Jobs;
 import java.util.List;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import tools.HibernateUtil;
 
 /**
@@ -17,10 +14,6 @@ import tools.HibernateUtil;
  * @author Ignatius
  */
 public class JobsDAO {
-
-    public Session session;
-    private SessionFactory factory;
-    public Transaction transaction;
     public FunctionsDAO fdao;
 
     public JobsDAO() {
@@ -55,6 +48,7 @@ public class JobsDAO {
     /**
      * Fungsi untuk menambahkan data pada tabel JOBS
      *
+     * @param object
      * @return flag /Insert berdasarkan Jobs Id
      *
      */

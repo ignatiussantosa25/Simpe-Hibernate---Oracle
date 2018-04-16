@@ -7,9 +7,6 @@ package dao;
 
 import entities.Locations;
 import java.util.List;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import tools.HibernateUtil;
 
 /**
@@ -18,14 +15,10 @@ import tools.HibernateUtil;
  */
 public class LocationsDAO implements InterfaceDAO {
 
-    public SessionFactory factory;
-    public Session session;
-    public Transaction transaksi;
     public FunctionsDAO fdao;
 
     public LocationsDAO() {
         this.fdao = new FunctionsDAO(HibernateUtil.getSessionFactory());
-        this.factory = HibernateUtil.getSessionFactory();
     }
 
     @Override

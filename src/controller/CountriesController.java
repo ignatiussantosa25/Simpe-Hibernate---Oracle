@@ -9,11 +9,9 @@ import dao.CountriesDAO;
 import dao.RegionsDAO;
 import entities.Countries;
 import entities.Regions;
-import java.math.BigDecimal;
 import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
-import javax.swing.plaf.synth.Region;
 import javax.swing.table.DefaultTableModel;
 
 /**
